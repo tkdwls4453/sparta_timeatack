@@ -5,6 +5,7 @@ import com.sparta.timeatack06.dto.RequestUpdateMemberDto;
 import com.sparta.timeatack06.dto.ResponseMemberDto;
 import com.sparta.timeatack06.entity.Gender;
 import com.sparta.timeatack06.entity.Member;
+import com.sparta.timeatack06.jwt.JwtUtils;
 import com.sparta.timeatack06.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final JwtUtils jwtUtils;
 
     @Override
     public long saveMember(RequestCreateMemberDto requestCreateMemberDto) {
@@ -75,5 +77,11 @@ public class MemberServiceImpl implements MemberService{
             ));
         }
         return resultList;
+    }
+
+    @Override
+    public String login(String email) {
+        Member member = memberRepository.findByEmail(email);
+        return jwtUtils.creatJWT(member.getEmail());
     }
 }

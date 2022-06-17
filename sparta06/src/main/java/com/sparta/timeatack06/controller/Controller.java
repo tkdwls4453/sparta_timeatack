@@ -1,9 +1,11 @@
 package com.sparta.timeatack06.controller;
 
 import com.sparta.timeatack06.dto.RequestCreateMemberDto;
+import com.sparta.timeatack06.dto.RequestLoginMemberDto;
 import com.sparta.timeatack06.dto.RequestUpdateMemberDto;
 import com.sparta.timeatack06.dto.ResponseMemberDto;
 import com.sparta.timeatack06.entity.Member;
+import com.sparta.timeatack06.repository.MemberRepository;
 import com.sparta.timeatack06.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 public class Controller {
 
     private final MemberService memberService;
+
 
     @PostMapping("/create")
     public Long createMember(@RequestBody RequestCreateMemberDto createMemberDto) {
@@ -40,5 +43,10 @@ public class Controller {
     @GetMapping("/recommend/{id}")
     public List<ResponseMemberDto> recommendMember(@PathVariable Long id) {
         return memberService.recommendMember(id);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody RequestLoginMemberDto requestLoginMemberDto) {
+        return memberService.login(requestLoginMemberDto.getEmail());
     }
 }

@@ -16,4 +16,6 @@ public interface MemberService {
     long modifiedMember(Long id, RequestUpdateMemberDto requestUpdateMemberDto);
 
     List<ResponseMemberDto> recommendMember(Long id);
+
+    String login(String email);
 }
